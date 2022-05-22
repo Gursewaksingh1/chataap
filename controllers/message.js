@@ -1,21 +1,9 @@
 const Message = require('../model/message')
-// const app = require('../app');
 
 exports.createmsg = async (req, res, next) => {
     try {
-console.log('fffffffff');
-        // const io = app.app.get("io")
-req.io.on('connection', socket => {
-
-            socket.emit('message', 'welcome in chat room')
-
-            //broadcast when user joined
-            socket.broadcast.emit('message', 'a user has joined');
-
-            //runs when client disconnects
-            socket.on('disconnect', () => {
-                req.io.emit('message', 'a user has left')
-            })
+        
+        req.io.on('connection', socket => {
 
             socket.on('chatMessage', msg => {
                 console.log(msg);

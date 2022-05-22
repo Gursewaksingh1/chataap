@@ -10,8 +10,7 @@ const messageRouter = require('./routes/message')
 const cors = require('cors');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*" } });
-// console.log(io);
-app.set("io", io)
+
 const ejs = require('ejs');
 const session = require('express-session')
 const multer = require('multer')
@@ -45,22 +44,20 @@ app.use(session({ secret: "its a secret!" }))
 const users = {}
 //run when client connect
 
-// io.on('connection', socket => {
+io.on('connection', socket => {
 
-//     socket.emit('message', 'welcome in chat room')
+    socket.emit('message', 'welcome in chat room')
 
-//     //broadcast when user joined
-//     socket.broadcast.emit('message', 'a user has joined');
+    //broadcast when user joined
+    socket.broadcast.emit('message', 'a user has joined');
 
-//     //runs when client disconnects
-//     socket.on('disconnect', () => {
-//         io.emit('message', 'a user has left')
-//     })
+    //runs when client disconnects
+    socket.on('disconnect', () => {
+        io.emit('message', 'a user has left')
+    })
 
-//     socket.on('chatMessage',msg => {
-//         console.log(msg);
-//     })
-//   })
+    
+  })
 
 
 app.use('/user', userRouter);
